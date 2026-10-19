@@ -1,55 +1,44 @@
-#include <iostream>
-using namespace std;
+#include <iostream.h>
+#include <conio.h>
 
 struct Node {
     int data;
     Node *next;
 };
 
-int main() {
+int main()
+{
     Node *head = NULL, *newNode, *temp;
-    int n, i, value, key, pos = 1;
-    bool found = false;
+    int n, i, value, key, pos = 1, found = 0;
+    clrscr();
 
-    cout << "Enter the number of nodes: ";
+    cout << "Enter the number of nodes (0-100): ";
     cin >> n;
+    if (n < 0 || n > 100) { cout << "Invalid number of nodes."; getch(); return 0; }
 
     for (i = 0; i < n; i++) {
         newNode = new Node;
-
-        cout << "Enter Data for node: ";
+        cout << "Enter data for node: ";
         cin >> value;
-
         newNode->data = value;
         newNode->next = NULL;
-
-        if (head == NULL) {
-            head = newNode;
-            temp = head;
-        } 
-        else {
-            temp->next = newNode;
-            temp = newNode;
-        }
+        if (head == NULL) { head = newNode; temp = head; }
+        else { temp->next = newNode; temp = newNode; }
     }
 
-    cout << "Enter element to search in the Linked List: ";
+    cout << "Enter element to search in the linked list: ";
     cin >> key;
-
     temp = head;
     while (temp != NULL) {
         if (temp->data == key) {
             cout << "Element found at position " << pos << endl;
-            found = true;
+            found = 1;
             break;
         }
-
         temp = temp->next;
         pos++;
     }
-
-    if (!found)
-        cout << "Element not found in the Linked List\n" << endl;
-    
+    if (!found) cout << "Element not found in the linked list\n";
+    getch();
     return 0;
 }
