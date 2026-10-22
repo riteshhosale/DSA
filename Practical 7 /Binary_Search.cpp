@@ -1,21 +1,24 @@
-#include <iostream>
-using namespace std;
+#include <iostream.h>
+#include <conio.h>
 
 int main()
 {
-    int a[100], n, key, low, high, mid, pos = -1;
+    int a[100], n, key, i;
+    int low, high, mid, pos;
 
-    cout << "Enter number of elements: ";
+    clrscr();
+    cout << "Enter number of elements (1-100): ";
     cin >> n;
 
     if (n < 1 || n > 100)
     {
         cout << "Invalid size\n";
+        getch();
         return 0;
     }
 
     cout << "Enter elements in ascending order: ";
-    for (int i = 0; i < n; i++)
+    for (i = 0; i < n; i++)
         cin >> a[i];
 
     cout << "Enter element to search: ";
@@ -23,11 +26,11 @@ int main()
 
     low = 0;
     high = n - 1;
+    pos = -1;
 
     while (low <= high)
     {
         mid = low + (high - low) / 2;
-
         if (a[mid] == key)
         {
             pos = mid;
@@ -44,5 +47,6 @@ int main()
     else
         cout << "Element found at position " << pos + 1 << endl;
 
+    getch();
     return 0;
 }
