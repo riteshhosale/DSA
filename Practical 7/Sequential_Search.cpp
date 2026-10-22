@@ -1,27 +1,30 @@
-#include <iostream>
-using namespace std;
+#include <iostream.h>
+#include <conio.h>
 
 int main()
 {
-    int a[100], n, key, pos = -1;
+    int a[100], n, key, i, pos;
 
-    cout << "Enter number of elements: ";
+    clrscr();
+    cout << "Enter number of elements (1-100): ";
     cin >> n;
 
     if (n < 1 || n > 100)
     {
         cout << "Invalid size\n";
+        getch();
         return 0;
     }
 
     cout << "Enter elements: ";
-    for (int i = 0; i < n; i++)
+    for (i = 0; i < n; i++)
         cin >> a[i];
 
     cout << "Enter element to search: ";
     cin >> key;
 
-    for (int i = 0; i < n; i++)
+    pos = -1;
+    for (i = 0; i < n; i++)
     {
         if (a[i] == key)
         {
@@ -35,5 +38,6 @@ int main()
     else
         cout << "Element found at position " << pos + 1 << endl;
 
+    getch();
     return 0;
 }
