@@ -1,34 +1,39 @@
-#include <iostream>
-using namespace std;
+#include <iostream.h>
+#include <conio.h>
 
-const int MAX = 20;
-const int INF = 1000000000;
+#define MAX 20
+#define INF 1000000000
 
 int main()
 {
     int graph[MAX][MAX], n, source;
-    int dist[MAX], visited[MAX] = {0}, parent[MAX];
+    int dist[MAX], visited[MAX], parent[MAX];
+    int i, j, count, u, v;
+    int path[MAX], length, current;
 
+    clrscr();
     cout << "Enter number of vertices (1-20): ";
     cin >> n;
 
     if (n < 1 || n > MAX)
     {
         cout << "Invalid number of vertices\n";
+        getch();
         return 0;
     }
 
-    cout << "Enter weighted adjacency matrix (0 means no edge, "
-         << "except diagonal):\n";
+    cout << "Enter weighted adjacency matrix (0 means no edge, ";
+    cout << "except diagonal):\n";
 
-    for (int i = 0; i < n; i++)
+    for (i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (j = 0; j < n; j++)
         {
             cin >> graph[i][j];
             if (graph[i][j] < 0)
             {
                 cout << "Negative weights are not supported\n";
+                getch();
                 return 0;
             }
         }
@@ -40,30 +45,32 @@ int main()
     if (source < 1 || source > n)
     {
         cout << "Invalid source vertex\n";
+        getch();
         return 0;
     }
 
-    for (int i = 0; i < n; i++)
+    for (i = 0; i < n; i++)
     {
         dist[i] = INF;
+        visited[i] = 0;
         parent[i] = -1;
     }
     dist[source - 1] = 0;
 
-    for (int count = 0; count < n; count++)
+    for (count = 0; count < n; count++)
     {
-        int u = -1;
-
-        for (int i = 0; i < n; i++)
+        u = -1;
+        for (i = 0; i < n; i++)
+        {
             if (!visited[i] && (u == -1 || dist[i] < dist[u]))
                 u = i;
+        }
 
         if (u == -1 || dist[u] == INF)
             break;
 
         visited[u] = 1;
-
-        for (int v = 0; v < n; v++)
+        for (v = 0; v < n; v++)
         {
             if (u != v && graph[u][v] > 0 &&
                 !visited[v] && dist[u] + graph[u][v] < dist[v])
@@ -75,10 +82,9 @@ int main()
     }
 
     cout << "Shortest paths from vertex " << source << ":\n";
-    for (int v = 0; v < n; v++)
+    for (v = 0; v < n; v++)
     {
         cout << "To vertex " << v + 1 << ": ";
-
         if (dist[v] == INF)
         {
             cout << "No path\n";
@@ -86,15 +92,16 @@ int main()
         }
 
         cout << "Distance = " << dist[v] << ", Path = ";
+        length = 0;
+        current = v;
 
-        int path[MAX], length = 0, current = v;
         while (current != -1)
         {
             path[length++] = current;
             current = parent[current];
         }
 
-        for (int i = length - 1; i >= 0; i--)
+        for (i = length - 1; i >= 0; i--)
         {
             cout << path[i] + 1;
             if (i > 0)
@@ -103,5 +110,6 @@ int main()
         cout << endl;
     }
 
+    getch();
     return 0;
 }
