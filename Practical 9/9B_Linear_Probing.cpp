@@ -1,23 +1,25 @@
-#include <iostream>
-using namespace std;
+#include <iostream.h>
+#include <conio.h>
 
-const int SIZE = 10;
+#define SIZE 10
+
 int table[SIZE];
 
 void initialize()
 {
-    for (int i = 0; i < SIZE; i++)
+    int i;
+    for (i = 0; i < SIZE; i++)
         table[i] = -1;
 }
 
 void insertKey(int key)
 {
-    int index = (key % SIZE + SIZE) % SIZE;
+    int index, i, position;
 
-    for (int i = 0; i < SIZE; i++)
+    index = (key % SIZE + SIZE) % SIZE;
+    for (i = 0; i < SIZE; i++)
     {
-        int position = (index + i) % SIZE;
-
+        position = (index + i) % SIZE;
         if (table[position] == -1)
         {
             table[position] = key;
@@ -25,14 +27,15 @@ void insertKey(int key)
             return;
         }
     }
-
     cout << "Hash table is full\n";
 }
 
 void display()
 {
+    int i;
     cout << "Index\tValue\n";
-    for (int i = 0; i < SIZE; i++)
+
+    for (i = 0; i < SIZE; i++)
     {
         cout << i << "\t";
         if (table[i] == -1)
@@ -46,11 +49,14 @@ void display()
 int main()
 {
     int choice, key;
+
+    clrscr();
     initialize();
 
     do
     {
-        cout << "\n1. Insert\n2. Display\n3. Exit\n";
+        cout << "\n--- HASH TABLE MENU ---\n";
+        cout << "1. Insert\n2. Display\n3. Exit\n";
         cout << "Enter choice: ";
         cin >> choice;
 
@@ -72,5 +78,6 @@ int main()
         }
     } while (choice != 3);
 
+    getch();
     return 0;
 }
