@@ -1,44 +1,26 @@
 #include <iostream.h>
-#include <conio.h>
 
-int main()
-{
-    int a[100], n, i, j, key;
+int main() {
+   int arr[50], n, i, j, key;
+   cout << "Enter number of elements: ";
+   cin >> n;
+   cout << "Enter " << n << " elements: ";
+   for (i = 0; i < n; i++) cin >> arr[i];
 
-    clrscr();
-    cout << "Enter number of elements (1-100): ";
-    cin >> n;
-
-    if (n < 1 || n > 100)
-    {
-        cout << "Invalid size\n";
-        getch();
-        return 0;
-    }
-
-    cout << "Enter elements: ";
-    for (i = 0; i < n; i++)
-        cin >> a[i];
-
-    for (i = 1; i < n; i++)
-    {
-        key = a[i];
+    // Insertion sort: insert each element into its correct place
+    for (i = 1; i < n; i++) {
+        key = arr[i];
         j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+           arr[j + 1] = arr[j]; // shift larger elements right
 
-        while (j >= 0 && a[j] > key)
-        {
-            a[j + 1] = a[j];
-            j--;
+           j--;
         }
-
-        a[j + 1] = key;
+        arr[j + 1] = key;
     }
 
-    cout << "Sorted elements: ";
-    for (i = 0; i < n; i++)
-        cout << a[i] << " ";
-
-    cout << endl;
-    getch();
+    cout << "Sorted array: ";
+    for (i = 0; i < n; i++) cout << arr[i] << " ";
+    cout << "\n";
     return 0;
 }
