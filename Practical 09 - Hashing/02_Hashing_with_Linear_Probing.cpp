@@ -1,83 +1,39 @@
 #include <iostream.h>
-#include <conio.h>
 
 #define SIZE 10
 
-int table[SIZE];
+int hashTable[SIZE];
 
-void initialize()
-{
-    int i;
-    for (i = 0; i < SIZE; i++)
-        table[i] = -1;
-}
+int main() {
+   int n, i, key, index, count;
+   for (i = 0; i < SIZE; i++)
+      hashTable[i] = -1;        // -1 means empty slot
 
-void insertKey(int key)
-{
-    int index, i, position;
-
-    index = (key % SIZE + SIZE) % SIZE;
-    for (i = 0; i < SIZE; i++)
-    {
-        position = (index + i) % SIZE;
-        if (table[position] == -1)
-        {
-            table[position] = key;
-            cout << "Element inserted at index " << position << endl;
-            return;
-        }
+    cout << "Enter number of elements (max " << SIZE << "): ";
+    cin >> n;
+    for (i = 1; i <= n; i++) {
+       cout << "Enter element " << i << ": ";
+       cin >> key;
+       index = key % SIZE;           // hash function
+       count = 0;
+       // if slot is full, move to the next slot (linear probing)
+       while (hashTable[index] != -1 && count < SIZE) {
+           index = (index + 1) % SIZE;
+           count++;
+       }
+       if (count == SIZE)
+           cout << "Hash table is full!\n";
+       else
+           hashTable[index] = key;
     }
-    cout << "Hash table is full\n";
-}
 
-void display()
-{
-    int i;
-    cout << "Index\tValue\n";
-
-    for (i = 0; i < SIZE; i++)
-    {
-        cout << i << "\t";
-        if (table[i] == -1)
-            cout << "Empty";
-        else
-            cout << table[i];
-        cout << endl;
+    cout << "\nHash Table (using linear probing):\n";
+    for (i = 0; i < SIZE; i++) {
+       cout << "Index " << i << ": ";
+       if (hashTable[i] == -1)
+          cout << "Empty\n";
+       else
+          cout << hashTable[i] << "\n";
     }
-}
-
-int main()
-{
-    int choice, key;
-
-    clrscr();
-    initialize();
-
-    do
-    {
-        cout << "\n--- HASH TABLE MENU ---\n";
-        cout << "1. Insert\n2. Display\n3. Exit\n";
-        cout << "Enter choice: ";
-        cin >> choice;
-
-        switch (choice)
-        {
-            case 1:
-                cout << "Enter key: ";
-                cin >> key;
-                insertKey(key);
-                break;
-            case 2:
-                display();
-                break;
-            case 3:
-                cout << "Program terminated\n";
-                break;
-            default:
-                cout << "Invalid choice\n";
-        }
-    } while (choice != 3);
-
-    getch();
     return 0;
 }
