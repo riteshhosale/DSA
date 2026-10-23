@@ -1,52 +1,29 @@
 #include <iostream.h>
-#include <conio.h>
 
-int main()
-{
-    int a[100], n, key, i;
-    int low, high, mid, pos;
-
-    clrscr();
-    cout << "Enter number of elements (1-100): ";
-    cin >> n;
-
-    if (n < 1 || n > 100)
-    {
-        cout << "Invalid size\n";
-        getch();
-        return 0;
-    }
-
-    cout << "Enter elements in ascending order: ";
-    for (i = 0; i < n; i++)
-        cin >> a[i];
-
-    cout << "Enter element to search: ";
-    cin >> key;
+int main() {
+   int arr[50], n, i, key, low, high, mid, found = 0;
+   cout << "Enter number of elements: ";
+   cin >> n;
+   cout << "Enter " << n << " elements in ascending order: ";
+   for (i = 0; i < n; i++) cin >> arr[i];
+   cout << "Enter element to search: ";
+   cin >> key;
 
     low = 0;
     high = n - 1;
-    pos = -1;
+    while (low <= high) {
+      mid = (low + high) / 2;
 
-    while (low <= high)
-    {
-        mid = low + (high - low) / 2;
-        if (a[mid] == key)
-        {
-            pos = mid;
-            break;
-        }
-        else if (a[mid] < key)
-            low = mid + 1;
-        else
-            high = mid - 1;
+      if (arr[mid] == key) {
+         cout << "Element found at position " << mid + 1 << ".\n";
+         found = 1;
+         break;
+      } else if (arr[mid] < key)
+         low = mid + 1;        // search right half
+      else
+         high = mid - 1;      // search left half
     }
-
-    if (pos == -1)
-        cout << "Element not found\n";
-    else
-        cout << "Element found at position " << pos + 1 << endl;
-
-    getch();
+    if (!found)
+       cout << "Element not found.\n";
     return 0;
 }
