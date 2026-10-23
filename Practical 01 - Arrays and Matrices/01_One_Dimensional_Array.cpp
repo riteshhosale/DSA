@@ -1,7 +1,7 @@
 #include <iostream.h>
 
 int main() {
-   int arr[50], n, choice, key, i, found;
+   int arr[50], n, choice, key, i, j, found, t;
    cout << "Enter number of elements: ";
    cin >> n;
    cout << "Enter " << n << " elements: ";
@@ -33,16 +33,15 @@ int main() {
        case 2:
           // Bubble sort (ascending order)
           for (i = 0; i < n - 1; i++)
-             for (int j = 0; j < n - 1 - i; j++)
+             for (j = 0; j < n - 1 - i; j++)
                 if (arr[j] > arr[j + 1]) {
-                   int t = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = t;
+                   t = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = t;
                 }
           cout << "Elements sorted successfully.\n";
           break;
        case 3:
           for (i = 0; i < n / 2; i++) {
-
-              int t = arr[i]; arr[i] = arr[n - 1 - i]; arr[n - 1 - i] = t;
+              t = arr[i]; arr[i] = arr[n - 1 - i]; arr[n - 1 - i] = t;
            }
            cout << "Elements reversed successfully.\n";
            break;
