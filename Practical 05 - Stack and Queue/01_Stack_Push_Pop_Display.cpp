@@ -22,11 +22,12 @@ void pop() {
    }
 }
 void display() {
+   int i;
    if (top == -1)
       cout << "Stack is empty.\n";
    else {
       cout << "Stack elements (top to bottom): ";
-      for (int i = top; i >= 0; i--)
+      for (i = top; i >= 0; i--)
          cout << stk[i] << " ";
       cout << "\n";
    }
