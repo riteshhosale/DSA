@@ -10,22 +10,23 @@ struct Node {
 Node *hashTable[SIZE];
 
 void insert(int key) {
-   int index = key % SIZE;         // hash function
+   int index = key % SIZE;
    Node *newNode = new Node;
    newNode->data = key;
    newNode->next = NULL;
    if (hashTable[index] == NULL)
       hashTable[index] = newNode;
    else {
-      // collision: add new node at the start of the chain
       newNode->next = hashTable[index];
       hashTable[index] = newNode;
    }
 }
 void display() {
-   for (int i = 0; i < SIZE; i++) {
+   int i;
+   Node *temp;
+   for (i = 0; i < SIZE; i++) {
       cout << "Index " << i << ": ";
-      Node *temp = hashTable[i];
+      temp = hashTable[i];
       while (temp != NULL) {
          cout << temp->data << " -> ";
          temp = temp->next;
@@ -46,6 +47,5 @@ int main() {
    }
    cout << "\nHash Table (collision handled by chaining):\n";
    display();
-
-    return 0;
+   return 0;
 }
