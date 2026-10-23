@@ -1,43 +1,23 @@
 #include <iostream.h>
-#include <conio.h>
 
-int main()
-{
-    int a[100], n, key, i, pos;
+int main() {
+   int arr[50], n, i, key, found = 0;
+   cout << "Enter number of elements: ";
+   cin >> n;
+   cout << "Enter " << n << " elements: ";
+   for (i = 0; i < n; i++) cin >> arr[i];
+   cout << "Enter element to search: ";
+   cin >> key;
 
-    clrscr();
-    cout << "Enter number of elements (1-100): ";
-    cin >> n;
-
-    if (n < 1 || n > 100)
-    {
-        cout << "Invalid size\n";
-        getch();
-        return 0;
+    // Sequential (linear) search: check each element one by one
+    for (i = 0; i < n; i++) {
+       if (arr[i] == key) {
+          cout << "Element found at position " << i + 1 << ".\n";
+          found = 1;
+          break;
+       }
     }
-
-    cout << "Enter elements: ";
-    for (i = 0; i < n; i++)
-        cin >> a[i];
-
-    cout << "Enter element to search: ";
-    cin >> key;
-
-    pos = -1;
-    for (i = 0; i < n; i++)
-    {
-        if (a[i] == key)
-        {
-            pos = i;
-            break;
-        }
-    }
-
-    if (pos == -1)
-        cout << "Element not found\n";
-    else
-        cout << "Element found at position " << pos + 1 << endl;
-
-    getch();
+    if (!found)
+       cout << "Element not found.\n";
     return 0;
 }
