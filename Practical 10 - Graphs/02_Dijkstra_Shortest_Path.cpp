@@ -1,115 +1,49 @@
 #include <iostream.h>
-#include <conio.h>
 
-#define MAX 20
-#define INF 1000000000
+#define INF 9999
 
-int main()
-{
-    int graph[MAX][MAX], n, source;
-    int dist[MAX], visited[MAX], parent[MAX];
-    int i, j, count, u, v;
-    int path[MAX], length, current;
+int main() {
+   int cost[20][20], dist[20], visited[20];
+   int n, i, j, u, v, min, start;
 
-    clrscr();
-    cout << "Enter number of vertices (1-20): ";
+    cout << "Enter number of vertices: ";
     cin >> n;
-
-    if (n < 1 || n > MAX)
-    {
-        cout << "Invalid number of vertices\n";
-        getch();
-        return 0;
-    }
-
-    cout << "Enter weighted adjacency matrix (0 means no edge, ";
-    cout << "except diagonal):\n";
-
+    cout << "Enter the cost adjacency matrix (9999 for no path):\n";
     for (i = 0; i < n; i++)
-    {
-        for (j = 0; j < n; j++)
-        {
-            cin >> graph[i][j];
-            if (graph[i][j] < 0)
-            {
-                cout << "Negative weights are not supported\n";
-                getch();
-                return 0;
-            }
-        }
-    }
+       for (j = 0; j < n; j++)
+          cin >> cost[i][j];
 
-    cout << "Enter source vertex (1-" << n << "): ";
-    cin >> source;
+    cout << "Enter the source vertex (1 to " << n << "): ";
+    cin >> start;
+    start = start - 1;
 
-    if (source < 1 || source > n)
-    {
-        cout << "Invalid source vertex\n";
-        getch();
-        return 0;
-    }
-
-    for (i = 0; i < n; i++)
-    {
-        dist[i] = INF;
+    // initialise distances from the source
+    for (i = 0; i < n; i++) {
+        dist[i] = cost[start][i];
         visited[i] = 0;
-        parent[i] = -1;
     }
-    dist[source - 1] = 0;
+    dist[start] = 0;
+    visited[start] = 1;
 
-    for (count = 0; count < n; count++)
-    {
-        u = -1;
-        for (i = 0; i < n; i++)
-        {
-            if (!visited[i] && (u == -1 || dist[i] < dist[u]))
-                u = i;
-        }
-
-        if (u == -1 || dist[u] == INF)
-            break;
-
-        visited[u] = 1;
-        for (v = 0; v < n; v++)
-        {
-            if (u != v && graph[u][v] > 0 &&
-                !visited[v] && dist[u] + graph[u][v] < dist[v])
-            {
-                dist[v] = dist[u] + graph[u][v];
-                parent[v] = u;
-            }
-        }
+    for (i = 1; i < n; i++) {
+       min = INF;
+       u = -1;
+       // choose the nearest unvisited vertex
+       for (j = 0; j < n; j++)
+          if (!visited[j] && dist[j] < min) {
+             min = dist[j];
+             u = j;
+          }
+       if (u == -1) break;
+       visited[u] = 1;
+       // update the distances of the neighbours
+       for (v = 0; v < n; v++)
+          if (!visited[v] && dist[u] + cost[u][v] < dist[v])
+             dist[v] = dist[u] + cost[u][v];
     }
 
-    cout << "Shortest paths from vertex " << source << ":\n";
-    for (v = 0; v < n; v++)
-    {
-        cout << "To vertex " << v + 1 << ": ";
-        if (dist[v] == INF)
-        {
-            cout << "No path\n";
-            continue;
-        }
-
-        cout << "Distance = " << dist[v] << ", Path = ";
-        length = 0;
-        current = v;
-
-        while (current != -1)
-        {
-            path[length++] = current;
-            current = parent[current];
-        }
-
-        for (i = length - 1; i >= 0; i--)
-        {
-            cout << path[i] + 1;
-            if (i > 0)
-                cout << " -> ";
-        }
-        cout << endl;
-    }
-
-    getch();
+    cout << "\nShortest distance from source vertex " << start + 1 << ":\n";
+    for (i = 0; i < n; i++)
+       cout << "To vertex " << i + 1 << " = " << dist[i] << "\n";
     return 0;
 }
