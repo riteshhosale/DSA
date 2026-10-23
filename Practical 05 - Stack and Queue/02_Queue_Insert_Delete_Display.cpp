@@ -1,106 +1,56 @@
 #include <iostream.h>
-#include <conio.h>
 
-#define MAX 5
+#define SIZE 5
 
-int queue[MAX];
-int front = -1, rear = -1;
+int queue[SIZE], front = -1, rear = -1;
 
-void insertElement()
-{
-    int value;
+void insert(int value) {
+  if (rear == SIZE - 1)
+     cout << "Queue Overflow! Cannot insert.\n";
+  else {
+     if (front == -1) front = 0; // first insertion
+     rear++;
+     queue[rear] = value;
+     cout << value << " inserted into queue.\n";
 
-    if (rear == MAX - 1)
-    {
-        cout << "Queue is overflow\n";
-    }
-    else
-    {
-        cout << "Enter element to insert: ";
-        cin >> value;
-
-        if (front == -1)
-            front = 0;
-
-        rear++;
-        queue[rear] = value;
-        cout << "Element inserted successfully\n";
-    }
+   }
 }
-
-void deleteElement()
-{
-    if (front == -1 || front > rear)
-    {
-        cout << "Queue is underflow\n";
-    }
-    else
-    {
-        cout << "Deleted element is " << queue[front] << endl;
-        front++;
-
-        if (front > rear)
-            front = rear = -1;
-    }
+void deleteElement() {
+   if (front == -1 || front > rear)
+      cout << "Queue Underflow! Queue is empty.\n";
+   else {
+      cout << queue[front] << " deleted from queue.\n";
+      front++;
+   }
 }
-
-void display()
-{
-    int i;
-
-    if (front == -1)
-    {
-        cout << "Queue is empty\n";
-    }
-    else
-    {
-        cout << "Queue elements: ";
-        for (i = front; i <= rear; i++)
-            cout << queue[i] << " ";
-
-        cout << endl;
-    }
+void display() {
+   if (front == -1 || front > rear)
+      cout << "Queue is empty.\n";
+   else {
+      cout << "Queue elements (front to rear): ";
+      for (int i = front; i <= rear; i++)
+         cout << queue[i] << " ";
+      cout << "\n";
+   }
 }
-
-int main()
-{
-    int choice;
-
-    clrscr();
-
-    do
-    {
-        cout << "\n--- QUEUE MENU ---\n";
-        cout << "1. Insert\n";
-        cout << "2. Delete\n";
-        cout << "3. Display\n";
-        cout << "4. Exit\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
-
-        switch (choice)
-        {
-            case 1:
-                insertElement();
-                break;
-
-            case 2:
-                deleteElement();
-                break;
-
-            case 3:
-                display();
-                break;
-
-            case 4:
-                cout << "Program exited successfully\n";
-                break;
-
-            default:
-                cout << "Invalid choice. Please try again.\n";
-        }
-    } while (choice != 4);
-
-    getch();
-    return 0;
+int main() {
+   int choice, value;
+   do {
+      cout << "\n----- QUEUE MENU -----\n";
+      cout << "1. Insert\n2. Delete\n3. Display\n4. Exit\n";
+      cout << "Enter your choice: ";
+      cin >> choice;
+      switch (choice) {
+         case 1:
+            cout << "Enter value to insert: ";
+            cin >> value;
+            insert(value);
+            break;
+         case 2: deleteElement(); break;
+         case 3: display(); break;
+         case 4: cout << "Exiting...\n"; break;
+         default: cout << "Invalid choice!\n";
+      }
+   } while (choice != 4);
+   return 0;
 }
