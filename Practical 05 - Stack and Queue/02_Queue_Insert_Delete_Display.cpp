@@ -12,7 +12,6 @@ void insert(int value) {
      rear++;
      queue[rear] = value;
      cout << value << " inserted into queue.\n";
-
    }
 }
 void deleteElement() {
@@ -24,11 +23,12 @@ void deleteElement() {
    }
 }
 void display() {
+   int i;
    if (front == -1 || front > rear)
       cout << "Queue is empty.\n";
    else {
       cout << "Queue elements (front to rear): ";
-      for (int i = front; i <= rear; i++)
+      for (i = front; i <= rear; i++)
          cout << queue[i] << " ";
       cout << "\n";
    }
