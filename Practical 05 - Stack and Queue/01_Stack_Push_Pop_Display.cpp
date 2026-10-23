@@ -1,70 +1,55 @@
 #include <iostream.h>
-#include <conio.h>
 
-int stk[5], top = -1, data;
+#define SIZE 5
 
-void push();
-void pop();
+int stk[SIZE], top = -1;
 
-int main()
-{
-    int ch;
+void push(int value) {
+   if (top == SIZE - 1)
+      cout << "Stack Overflow! Cannot push.\n";
+   else {
+      top++;
+      stk[top] = value;
+      cout << value << " pushed to stack.\n";
+   }
+}
+void pop() {
+   if (top == -1)
+      cout << "Stack Underflow! Stack is empty.\n";
+   else {
+      cout << stk[top] << " popped from stack.\n";
+      top--;
+   }
+}
+void display() {
+   if (top == -1)
+      cout << "Stack is empty.\n";
+   else {
+      cout << "Stack elements (top to bottom): ";
+      for (int i = top; i >= 0; i--)
+         cout << stk[i] << " ";
+      cout << "\n";
+   }
+}
+int main() {
+   int choice, value;
+   do {
+      cout << "\n----- STACK MENU -----\n";
+      cout << "1. Push\n2. Pop\n3. Display\n4. Exit\n";
+      cout << "Enter your choice: ";
+      cin >> choice;
+      switch (choice) {
+         case 1:
+            cout << "Enter value to push: ";
+            cin >> value;
+            push(value);
+            break;
+         case 2: pop(); break;
+         case 3: display(); break;
+         case 4: cout << "Exiting...\n"; break;
 
-    clrscr();
-
-    do
-    {
-        cout << "\n--- MENU ---\n";
-        cout << "1. PUSH\n";
-        cout << "2. POP\n";
-        cout << "3. EXIT\n";
-        cout << "Enter your choice: ";
-        cin >> ch;
-
-        switch (ch)
-        {
-            case 1:
-                push();
-                break;
-
-            case 2:
-                pop();
-                break;
-
-            case 3:
-                cout << "Program exited successfully\n";
-                break;
-
-            default:
-                cout << "Invalid choice. Please try again.\n";
-        }
-    } while (ch != 3);
-
-    getch();
+         default: cout << "Invalid choice!\n";
+       }
+    } while (choice != 4);
     return 0;
-}
-
-void push()
-{
-    if (top == 4)
-    {
-        cout << "Stack is Overflow\n";
-        return;
-    }
-
-    cout << "Enter data to push: ";
-    cin >> data;
-    stk[++top] = data;
-}
-
-void pop()
-{
-    if (top == -1)
-    {
-        cout << "Stack is Underflow\n";
-        return;
-    }
-
-    cout << "Deleted element is " << stk[top] << endl;
-    top--;
 }
