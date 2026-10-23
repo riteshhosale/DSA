@@ -1,121 +1,71 @@
 #include <iostream.h>
-#include <conio.h>
 
-struct Node
-{
-    int info;
-    Node *left, *right;
+struct Node {
+   int data;
+   Node *left;
+   Node *right;
 };
 
-Node *root = NULL;
-
-Node *maketree(int x)
-{
-    Node *p = new Node;
-    p->info = x;
-    p->left = p->right = NULL;
-    return p;
+// create a new node
+Node* createNode(int value) {
+   Node *newNode = new Node;
+   newNode->data = value;
+   newNode->left = NULL;
+   newNode->right = NULL;
+   return newNode;
 }
 
-Node *insert(Node *tree, int x)
-{
-    if (tree == NULL)
-        return maketree(x);
-
-    if (x < tree->info)
-        tree->left = insert(tree->left, x);
-    else if (x > tree->info)
-        tree->right = insert(tree->right, x);
+// insert a value into the binary search tree
+Node* insert(Node *root, int value) {
+    if (root == NULL)
+       return createNode(value);
+    if (value < root->data)
+       root->left = insert(root->left, value);
     else
-        cout << "Duplicate number\n";
-
-    return tree;
+       root->right = insert(root->right, value);
+    return root;
 }
 
-void preorder(Node *tree)
-{
-    if (tree != NULL)
-    {
-        cout << tree->info << "\t";
-        preorder(tree->left);
-        preorder(tree->right);
-    }
+void inorder(Node *root) {      // Left, Root, Right
+  if (root != NULL) {
+     inorder(root->left);
+     cout << root->data << " ";
+     inorder(root->right);
+  }
+}
+void preorder(Node *root) {      // Root, Left, Right
+  if (root != NULL) {
+     cout << root->data << " ";
+     preorder(root->left);
+     preorder(root->right);
+  }
+}
+void postorder(Node *root) {      // Left, Right, Root
+  if (root != NULL) {
+     postorder(root->left);
+     postorder(root->right);
+     cout << root->data << " ";
+  }
+
 }
 
-void inorder(Node *tree)
-{
-    if (tree != NULL)
-    {
-        inorder(tree->left);
-        cout << tree->info << "\t";
-        inorder(tree->right);
-    }
-}
+int main() {
+   Node *root = NULL;
+   int n, i, value;
+   cout << "Enter number of nodes: ";
+   cin >> n;
+   for (i = 1; i <= n; i++) {
+      cout << "Enter value " << i << ": ";
+      cin >> value;
+      root = insert(root, value);
+   }
 
-void postorder(Node *tree)
-{
-    if (tree != NULL)
-    {
-        postorder(tree->left);
-        postorder(tree->right);
-        cout << tree->info << "\t";
-    }
-}
-
-int main()
-{
-    int ch, x;
-
-    clrscr();
-
-    do
-    {
-        cout << "\n--- MENU ---\n";
-        cout << "1. Insert\n";
-        cout << "2. Preorder Traversal\n";
-        cout << "3. Inorder Traversal\n";
-        cout << "4. Postorder Traversal\n";
-        cout << "5. Exit\n";
-        cout << "Enter your choice: ";
-        cin >> ch;
-
-        switch (ch)
-        {
-            case 1:
-                cout << "Enter numbers to insert (0 to stop): ";
-                cin >> x;
-
-                while (x != 0)
-                {
-                    root = insert(root, x);
-                    cin >> x;
-                }
-                break;
-
-            case 2:
-                preorder(root);
-                cout << endl;
-                break;
-
-            case 3:
-                inorder(root);
-                cout << endl;
-                break;
-
-            case 4:
-                postorder(root);
-                cout << endl;
-                break;
-
-            case 5:
-                cout << "Program exited successfully\n";
-                break;
-
-            default:
-                cout << "Invalid choice. Please try again.\n";
-        }
-    } while (ch != 5);
-
-    getch();
+    cout << "\nInorder Traversal: ";
+    inorder(root);
+    cout << "\nPreorder Traversal: ";
+    preorder(root);
+    cout << "\nPostorder Traversal: ";
+    postorder(root);
+    cout << "\n";
     return 0;
 }
