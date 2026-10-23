@@ -1,74 +1,40 @@
 #include <iostream.h>
-#include <conio.h>
 
-struct Node
-{
-    int data;
-    Node *next;
+struct Node {
+   int data;
+   Node *next;
 };
 
-int main()
-{
-    Node *head = NULL, *newNode, *temp;
-    int n, i, value, key, pos = 1, found = 0;
-
-    clrscr();
-
-    cout << "Enter number of nodes (0-100): ";
-    cin >> n;
-
-    if (n < 0 || n > 100)
-    {
-        cout << "Invalid number of nodes.";
-        getch();
-        return 0;
-    }
-
-    for (i = 0; i < n; i++)
-    {
-        newNode = new Node;
-        cout << "Enter data: ";
-        cin >> value;
-
-        newNode->data = value;
-
-        if (head == NULL)
-        {
-            head = newNode;
-            temp = head;
-            newNode->next = head;
-        }
-        else
-        {
-            newNode->next = head;
-            temp->next = newNode;
-            temp = newNode;
-        }
-    }
+int main() {
+   Node *head = NULL, *temp = NULL, *newNode;
+   int n, i, key;
+   cout << "Enter number of nodes: ";
+   cin >> n;
+   for (i = 1; i <= n; i++) {
+      newNode = new Node;
+      cout << "Enter data for node " << i << ": ";
+      cin >> newNode->data;
+      newNode->next = NULL;
+      if (head == NULL) { head = newNode; temp = head; }
+      else { temp->next = newNode; temp = newNode; }
+   }
+   temp->next = head; // make it circular
 
     cout << "Enter element to search: ";
     cin >> key;
 
-    if (head != NULL)
-    {
-        temp = head;
-        do
-        {
-            if (temp->data == key)
-            {
-                cout << "Element found at position " << pos << endl;
-                found = 1;
-                break;
-            }
-
-            temp = temp->next;
-            pos++;
-        } while (temp != head);
+    temp = head;
+    int pos = 1, found = 0;
+    if (head != NULL) {
+       do {
+          if (temp->data == key) { found = 1; break; }
+          pos++;
+          temp = temp->next;
+       } while (temp != head);
     }
-
-    if (!found)
-        cout << "Element not found" << endl;
-
-    getch();
+    if (found)
+       cout << "Element " << key << " found at position " << pos << ".\n";
+    else
+       cout << "Element " << key << " not found in the list.\n";
     return 0;
 }
