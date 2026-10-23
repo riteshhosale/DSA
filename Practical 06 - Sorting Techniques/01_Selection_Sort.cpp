@@ -1,44 +1,25 @@
 #include <iostream.h>
-#include <conio.h>
 
-int main()
-{
-    int a[100], n, i, j, minIndex, temp;
+int main() {
+   int arr[50], n, i, j, min;
+   cout << "Enter number of elements: ";
+   cin >> n;
+   cout << "Enter " << n << " elements: ";
+   for (i = 0; i < n; i++) cin >> arr[i];
 
-    clrscr();
-    cout << "Enter number of elements (1-100): ";
-    cin >> n;
-
-    if (n < 1 || n > 100)
-    {
-        cout << "Invalid size\n";
-        getch();
-        return 0;
+    // Selection sort: pick the smallest element each pass
+    for (i = 0; i < n - 1; i++) {
+       min = i;
+       for (j = i + 1; j < n; j++)
+          if (arr[j] < arr[min])
+             min = j;
+       int temp = arr[min];        // swap smallest to its place
+       arr[min] = arr[i];
+       arr[i] = temp;
     }
 
-    cout << "Enter elements: ";
-    for (i = 0; i < n; i++)
-        cin >> a[i];
-
-    for (i = 0; i < n - 1; i++)
-    {
-        minIndex = i;
-        for (j = i + 1; j < n; j++)
-        {
-            if (a[j] < a[minIndex])
-                minIndex = j;
-        }
-
-        temp = a[i];
-        a[i] = a[minIndex];
-        a[minIndex] = temp;
-    }
-
-    cout << "Sorted elements: ";
-    for (i = 0; i < n; i++)
-        cout << a[i] << " ";
-
-    cout << endl;
-    getch();
+    cout << "Sorted array: ";
+    for (i = 0; i < n; i++) cout << arr[i] << " ";
+    cout << "\n";
     return 0;
 }
