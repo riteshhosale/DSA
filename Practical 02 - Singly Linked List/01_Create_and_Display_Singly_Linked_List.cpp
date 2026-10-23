@@ -1,61 +1,35 @@
 #include <iostream.h>
-#include <conio.h>
 
-struct Node
-{
-    int data;
-    Node *next;
+struct Node {
+   int data;
+   Node *next;
 };
 
-int main()
-{
-    Node *head = NULL, *newNode, *temp;
-    int n, i, value;
+int main() {
+   Node *head = NULL, *temp = NULL, *newNode;
+   int n, i;
+   cout << "Enter number of nodes: ";
+   cin >> n;
+   for (i = 1; i <= n; i++) {
+      newNode = new Node;
+      cout << "Enter data for node " << i << ": ";
+      cin >> newNode->data;
+      newNode->next = NULL;
+      if (head == NULL) {         // first node
+         head = newNode;
+         temp = head;
+      } else {            // link at the end
+         temp->next = newNode;
+         temp = newNode;
+      }
+   }
 
-    clrscr();
-
-    cout << "Enter the number of nodes (0-100): ";
-    cin >> n;
-
-    if (n < 0 || n > 100)
-    {
-        cout << "Invalid number of nodes.";
-        getch();
-        return 0;
-    }
-
-    for (i = 0; i < n; i++)
-    {
-        newNode = new Node;
-        cout << "Enter data: ";
-        cin >> value;
-
-        newNode->data = value;
-        newNode->next = NULL;
-
-        if (head == NULL)
-        {
-            head = newNode;
-            temp = head;
-        }
-        else
-        {
-            temp->next = newNode;
-            temp = newNode;
-        }
-    }
-
-    cout << "\nLinked List Elements: ";
+    cout << "\nLinked List: ";
     temp = head;
-
-    while (temp != NULL)
-    {
-        cout << temp->data << " -> ";
-        temp = temp->next;
+    while (temp != NULL) {
+       cout << temp->data << " -> ";
+       temp = temp->next;
     }
-
     cout << "NULL\n";
-
-    getch();
     return 0;
 }
